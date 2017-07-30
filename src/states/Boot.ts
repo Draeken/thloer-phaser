@@ -1,7 +1,9 @@
-import Phaser from 'phaser'
-import WebFont from 'webfontloader'
+import * as Phaser from 'phaser-ce'
+import { load } from 'webfontloader'
 
-export default class extends Phaser.State {
+export class BootState extends Phaser.State {
+  private fontsReady: boolean;
+
   init () {
     this.stage.backgroundColor = '#EDEEC9'
     this.fontsReady = false
@@ -9,7 +11,7 @@ export default class extends Phaser.State {
   }
 
   preload () {
-    WebFont.load({
+    load({
       google: {
         families: ['Bangers']
       },

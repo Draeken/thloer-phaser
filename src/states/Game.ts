@@ -1,8 +1,10 @@
 /* globals __DEV__ */
-import Phaser from 'phaser'
-import Mushroom from '../sprites/Mushroom'
+import * as Phaser from 'phaser-ce'
+import { MushroomSprite } from '../sprites/Mushroom'
 
-export default class extends Phaser.State {
+export class GameState extends Phaser.State {
+  private mushroom: Phaser.Sprite;
+
   init () {}
   preload () {}
 
@@ -16,8 +18,8 @@ export default class extends Phaser.State {
     banner.smoothed = false
     banner.anchor.setTo(0.5)
 
-    this.mushroom = new Mushroom({
-      game: this,
+    this.mushroom = new MushroomSprite({
+      game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
       asset: 'mushroom'
@@ -27,8 +29,6 @@ export default class extends Phaser.State {
   }
 
   render () {
-    if (__DEV__) {
-      this.game.debug.spriteInfo(this.mushroom, 32, 32)
-    }
+    this.game.debug.spriteInfo(this.mushroom, 32, 32)
   }
 }
