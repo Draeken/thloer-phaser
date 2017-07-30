@@ -9,6 +9,10 @@
     "deploy": "webpack --config webpack.production.config.js",
     "test": "eslint ./src/**/**.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PBM42/thloer.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -33,6 +37,7 @@
   "dependencies": {
     "@types/webfontloader": "1.6.28",
     "phaser-ce": "^2.8.3",
+    "rxjs": "5.4.2",
     "webfontloader": "^1.6.28"
   }
 }

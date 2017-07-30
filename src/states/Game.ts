@@ -1,6 +1,6 @@
 /* globals __DEV__ */
-import * as Phaser from 'phaser-ce'
-import { MushroomSprite } from '../sprites/Mushroom'
+import * as Phaser from 'phaser-ce';
+import { MushroomSprite } from '../sprites/Mushroom';
 
 export class GameState extends Phaser.State {
   private mushroom: Phaser.Sprite;
