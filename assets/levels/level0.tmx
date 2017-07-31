@@ -64,7 +64,7 @@
 </data>
  </layer>
  <objectgroup color="#1d9c2c" name="Player">
-  <object id="6" x="497" y="173" width="32" height="48"/>
+  <object id="6" name="Player" x="497" y="173" width="32" height="48"/>
  </objectgroup>
  <objectgroup color="#d80505" name="MobSpawners">
   <object id="1" x="951" y="81" width="32" height="32"/>

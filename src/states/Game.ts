@@ -1,34 +1,50 @@
 /* globals __DEV__ */
 import * as Phaser from 'phaser-ce';
-import { MushroomSprite } from '../sprites/Mushroom';
+import { Player } from '../sprites/player';
+import { KeyState } from '../utils/key.state';
 
 export class GameState extends Phaser.State {
-  private mushroom: Phaser.Sprite;
+  private groupBot: Phaser.Group;
+  private groupLevel: Phaser.Group;
+//  private map: Phaser.Tilemap;
+  private mapForgroundLayer: Phaser.TilemapLayer;
 
   init () {}
   preload () {}
 
   create () {
-    const bannerText = 'Phaser + ES6 + Webpack'
-    let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText)
-    banner.font = 'Bangers'
-    banner.padding.set(10, 16)
-    banner.fontSize = 40
-    banner.fill = '#77BFA3'
-    banner.smoothed = false
-    banner.anchor.setTo(0.5)
+    KeyState.instance.registerKeyboard(this.game.input.keyboard);
+    const map = this.handleTilemap();
+    this.handleGroups();
+    this.addObjectsFromMap(map);
+    this.game.physics.arcade.gravity.y = 250;
 
-    this.mushroom = new MushroomSprite({
-      game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
-      asset: 'mushroom'
-    })
-
-    this.game.add.existing(this.mushroom)
   }
 
   render () {
-    this.game.debug.spriteInfo(this.mushroom, 32, 32)
+    this.game.debug.bodyInfo(this.groupBot.getByName('Player'), 32, 32);
+  }
+
+  update() {
+    this.game.physics.arcade.collide(this.groupBot, this.mapForgroundLayer);
+  }
+
+  private handleGroups() {
+    this.groupBot = this.game.add.group(undefined, 'bots', false, true, Phaser.Physics.ARCADE);
+  }
+
+  private handleTilemap(): Phaser.Tilemap {
+    const map = this.game.add.tilemap('level0');
+    map.addTilesetImage('tiles');
+    const layer1 = map.createLayer('Background');
+    layer1.resizeWorld();
+    this.mapForgroundLayer = map.createLayer('Walls');
+    map.setCollisionByExclusion([0, 1], true, 'Walls');
+    this.camera.focusOnXY(map.widthInPixels / 2, map.widthInPixels / 2 - map.tileHeight * 3);
+    return map;
+  }
+
+  private addObjectsFromMap(map: Phaser.Tilemap): void {
+    map.createFromObjects('Player', 'Player', 'eggbot', 2, true, false, this.groupBot, Player, true);
   }
 }
