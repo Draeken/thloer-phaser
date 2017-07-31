@@ -15,14 +15,11 @@ export class SplashState extends Phaser.State {
     this.load.setPreloadSprite(this.loaderBar);
     this.load.image('mushroom', 'assets/images/mushroom2.png');
     this.load.image('battery', 'assets/images/battery.png');
-    this.load.image('bulletsheet', 'assets/images/bulletsheet.png');
-    this.load.image('enemy1', 'assets/images/enemy1.png');
-    this.load.image('loader-bar', 'assets/images/loader-bar.png');
-    this.load.image('loader-bg', 'assets/images/loader-bg.png');
-    this.load.image('player', 'assets/images/player.png');
+    this.load.spritesheet('bulletsheet', 'assets/images/bulletsheet.png', 8, 8);
+    this.load.spritesheet('eggbot', 'assets/images/player.png', 32, 48);
     this.load.image('xplosion', 'assets/images/Shitty_xplozion.png');
 
-    this.load.tilemap('level0', 'assets/levels/level0.json', Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('level0', 'assets/levels/level0.json', undefined, Phaser.Tilemap.TILED_JSON);
     this.load.image('tiles', 'assets/tilesheets/tiles.png')
 
     this.load.audio('music', ['assets/music/music.ogg']);
