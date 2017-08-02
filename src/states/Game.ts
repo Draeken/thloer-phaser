@@ -6,7 +6,6 @@ import { KeyState } from '../utils/key.state';
 export class GameState extends Phaser.State {
   private groupBot: Phaser.Group;
   private groupLevel: Phaser.Group;
-//  private map: Phaser.Tilemap;
   private mapForgroundLayer: Phaser.TilemapLayer;
 
   init () {}
