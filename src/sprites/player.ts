@@ -17,7 +17,11 @@ export class Player extends Phaser.Sprite {
   private readonly rightKey = Phaser.KeyCode.D;
   private readonly jumpKey = Phaser.KeyCode.Z;
   private readonly shootKey = Phaser.KeyCode.SPACEBAR;
-  private jumpTimer = 0;
+  private maxJumps = 2;
+  private jumpCount = 0;
+  private jumpTimer = -1;
+  private jumpFactor = -0.53;
+  private jumpPower = 0.25;
   private moveSpeed = 150;
   private moveKeys: MoveKeys;
 
@@ -56,11 +60,29 @@ export class Player extends Phaser.Sprite {
     } else {
         this.stopMoveAnim();
     }
+    this.handleJump();
+  }
 
-    if (this.moveKeys.jump.isDown && this.body.onFloor() && this.game.time.now > this.jumpTimer)
+  private handleJump(): void {
+    if (this.moveKeys.jump.justDown && this.jumpCount < this.maxJumps)
     {
-        this.body.velocity.y = -800;
-        this.jumpTimer = this.game.time.now + 750;
+      this.jumpCount += 1;
+      this.jumpTimer = 0;
+    }
+    if (this.moveKeys.jump.isDown && this.jumpTimer >= 0) {
+      this.jumpTimer += this.game.time.physicsElapsed;
+      if (this.jumpTimer > this.jumpPower) {
+        this.jumpTimer = -1;
+      } else {
+        this.body.velocity.y = this.jumpFactor * this.body.maxVelocity.y;
+      }
+    } else {
+      this.jumpTimer = -1;
+    }
+
+    if (!this.moveKeys.jump.isDown && this.body.onFloor()) {
+      this.jumpCount = 0;
+      this.jumpTimer = -1;
     }
   }
 
@@ -79,6 +101,6 @@ export class Player extends Phaser.Sprite {
   private initPhysics(body: any): void {
     body.bounce.y = 0.2;
     body.gravity.y = 1000;
-    body.maxVelocity = new Phaser.Point(150, 500);
+    body.maxVelocity = new Phaser.Point(200, 666);
   }
 }
