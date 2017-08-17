@@ -13,7 +13,7 @@ export class GameState extends Phaser.State {
   preload () {}
 
   create () {
-    KeyState.instance.registerKeyboard(this.game.input.keyboard);
+    // KeyState.instance.registerKeyboard(this.game.input.keyboard);
     const map = this.handleTilemap();
     this.handleGroups();
     this.addObjectsFromMap(map);
